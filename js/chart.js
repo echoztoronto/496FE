@@ -1,4 +1,3 @@
-//var data_lines = []; //global variables
 
 function processData(allText) {
   var record_num = 10; 
