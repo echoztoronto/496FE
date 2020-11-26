@@ -61,7 +61,7 @@ function processData(data, time_year, time_month, time_day) {
     new Chart(document.getElementById("line-chart"), {
       type: 'line',
       data: {
-        labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+        labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
         datasets: [{ 
             data: data_lines,
             label: buildingName,
@@ -74,19 +74,21 @@ function processData(data, time_year, time_month, time_day) {
         title: {
           display: true,
           text: "Historical Load of ".concat(month, "/", day, "/", year),
-          fontSize: 20       
+          fontSize: 30       
         },
         scales: {
           xAxes: [{
             scaleLabel: {
+              fontSize: 20,
               display:true,
               labelString: "Time of the day"
             }
           }],
           yAxes: [{
             scaleLabel: {
+              fontSize: 20,
               display:true,
-              labelString: "Load"
+              labelString: "Load (kW)"
             }
           }]
         }  

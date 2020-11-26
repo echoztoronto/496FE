@@ -61,12 +61,27 @@ p {
     padding: 0 0 0 0;
 }
 
+.chart-selection {
+    float:left;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5em;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.chart-selection p {
+    font-size: 1em;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
 .chart-content {
-    margin-left: 20%;
-    margin-right: 20%;
+    padding-top: 5%;
+    margin-left: 30%;
+    margin-right: 5%;
     width: 60vw;
     height: 40vw;
-    background-color: #f0eeee;
+    background-color: #f3f3f3;
 }
 
 
