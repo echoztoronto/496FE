@@ -75,11 +75,14 @@ p {
 
 
 .chart-content {
+    display: flex;
     padding-top: 5%;
     margin-left: 35%;
     margin-right: 5%;
     width: 60vw;
     height: 40vw;
+    min-width: 400px;
+    min-height: 300px;
     background-color: #f3f3f3;
 }
 
