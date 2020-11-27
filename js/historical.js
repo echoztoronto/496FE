@@ -4,7 +4,7 @@ var numDays = {
                 '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31
               };
 
-var time_year, time_month,  time_day;
+var mychart;
 
 function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
 {
@@ -32,16 +32,17 @@ function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
   var buildingName = oBuildingSel.options[oBuildingSel.selectedIndex].value;
   var pathName = "js/data/historical/".concat(buildingName, ".json");
 
-
   var fs = $(document).ready(function() {
     $.ajax({
         type: "GET",
         url: pathName ,
         dataType: "json",
         success: function(data) {
+          if(mychart != undefined) {
+            mychart.destroy();
+          }
           var data_lines = processData(data, year, month, day);
-  
-          var mychart = drawGraph(data_lines, buildingName, year, month, day);
+          drawGraph(data_lines, buildingName, year, month, day);
         }
       });
   });
@@ -56,7 +57,7 @@ function processData(data, time_year, time_month, time_day) {
   }
 
   function drawGraph(data_lines, buildingName, year, month, day) {
-    new Chart(document.getElementById("line-chart"), {
+    mychart = new Chart(document.getElementById("line-chart"), {
       type: 'line',
       data: {
         labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
