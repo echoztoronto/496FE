@@ -42,8 +42,6 @@ function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
           var data_lines = processData(data, year, month, day);
   
           var mychart = drawGraph(data_lines, buildingName, year, month, day);
-        
-        mychart.update();
         }
       });
   });
@@ -96,15 +94,3 @@ function processData(data, time_year, time_month, time_day) {
     });
   }
   
-
-
-  
-  
-
-  
-  
-  
-
-function updateGraph() {
-  mychart.update();
-}
