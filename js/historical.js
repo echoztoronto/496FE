@@ -41,20 +41,31 @@ function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
           if(mychart != undefined) {
             mychart.destroy();
           }
-          var data_lines = processData(data, year, month, day);
-          drawGraph(data_lines, buildingName, year, month, day);
+          if (year in data) {
+            if (month in data[year]) {
+              if (day in data[year][month]) {
+                var data_lines = data[year][month][day];
+                console.log("okkkk");
+                drawGraph(data_lines, buildingName, year, month, day);
+                document.getElementById("selection-notif").innerHTML = " ";
+              }
+              else {
+                document.getElementById("selection-notif").innerHTML = "Sorry, currently we don't have data for this date";
+              }
+            } else {
+              document.getElementById("selection-notif").innerHTML = "Sorry, currently we don't have data for this date";
+            }
+          }
+          else {
+            document.getElementById("selection-notif").innerHTML = "Sorry, currently we don't have data for this date";
+          }
         }
       });
+      
   });
 }
 
 
-
-
-function processData(data, time_year, time_month, time_day) {
-    lines = data[time_year][time_month][time_day];
-    return lines;
-  }
 
   function drawGraph(data_lines, buildingName, year, month, day) {
     mychart = new Chart(document.getElementById("line-chart"), {
