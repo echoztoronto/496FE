@@ -7,6 +7,7 @@ var numDays = {
 var mychart;
 
 
+
 function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
 {
 	var nDays, oDaysSelLgth, opt, i = 1;
@@ -25,12 +26,9 @@ function graphFilter(oMonthSel, oDaysSel, oYearSel, oBuildingSel)
 		}
   }
 
-	var oForm = oMonthSel.form;
 	var month = oMonthSel.options[oMonthSel.selectedIndex].value;
 	var day = oDaysSel.options[oDaysSel.selectedIndex].value;
 	var year = oYearSel.options[oYearSel.selectedIndex].value;	
-  oForm.hidden.value = month + '/' + day + '/' + year;
-  
   var buildingName = oBuildingSel.options[oBuildingSel.selectedIndex].value;
   var pathName = "js/data/historical/".concat(buildingName, ".json");
 
@@ -76,6 +74,11 @@ function drawGraph(data_lines, buildingName, year, month, day) {
         display: true,
         text: "Historical Load of ".concat(month, "/", day, "/", year),
         fontSize: 30       
+      },
+      legend:{
+        labels: {
+          fontSize: 18
+        }
       },
       scales: {
         xAxes: [{
