@@ -26,7 +26,6 @@ var dataset = {
 
 
 function set_data (num, oMonthSel, oDaysSel, oYearSel) {
-  console.log("set_data ", num);
 
   var nDays, oDaysSelLgth, opt, i = 1;
 	nDays = numDays[oMonthSel[oMonthSel.selectedIndex].value];
@@ -48,14 +47,17 @@ function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   dataset[num].day = oDaysSel.options[oDaysSel.selectedIndex].value;
   dataset[num].year = oYearSel.options[oYearSel.selectedIndex].value;
 
-  graph_refresh(mychart);
+  if (dataset[num].month != '0' && dataset[num].building != '0') {
+    graph_refresh(mychart);
+  }
 }
 
 function set_building (num, oBuildingSel) {
-  console.log("set_building", num);
 
   dataset[num].building = oBuildingSel.options[oBuildingSel.selectedIndex].value;
-  graph_refresh(mychart);
+  if (dataset[num].month != '0' && dataset[num].building != '0') {
+    graph_refresh(mychart);
+  }
 }
 
 
