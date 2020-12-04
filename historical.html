@@ -43,15 +43,13 @@
     <div class="container-fluid">
         <!--Selection panel-->
         <div class="about-content"> 
-            <div id = "selection-notif">
-
-            </div>
+            <div id = "selection-notif"></div>
 
             <div class="chart-selection">
                 
                 <p> Set the date </p>
                 <form>
-                    <select name="month" id="month" onchange="graphFilter(this,day,year,building)">
+                    <select name="month" id="month" onchange="set_data('1',this,day,year)">
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -65,7 +63,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select name="day" id="day" onchange="graphFilter(month,this,year,building)">
+                    <select name="day" id="day" onchange="set_data('1',month,this,year)">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -98,7 +96,7 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select name="year" id="year" onchange="graphFilter(month,day,this,building)">
+                    <select name="year" id="year" onchange="set_data('1',month,day,this)">
                         <option value="2019">2019</option>
                         <option value="2020">2020</option>
                     </select>
@@ -107,7 +105,7 @@
                 <br/>
                 <p> Select a building </p>
                 <form>
-                    <select name="building" id="building" onchange="graphFilter(month,day,year,this)">
+                    <select name="building" id="building" onchange="set_building('1', this)">
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
                         <option value="Alumni Centre"> Alumni Centre </option>
@@ -211,8 +209,182 @@
                         <option value="Wesbrook Building"> Wesbrook Building </option>
                         <option value="Woodward IRC"> Woodward IRC </option>
                         <option value="Woodward Library"> Woodward Library </option>
-
                     </select>
+                </form>
+
+                <div style="background-color: white; height: 2em"> 
+                </div>
+                
+
+                <p> Set the date </p>
+                <form>
+                    <select name="month" id="month" onchange="set_data('2', this,day,year)">
+                        <option value="0">-optional-</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select name="day" id="day" onchange="set_data('2', month,this,year)">
+                        <option value="0">-optional-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                    <select name="year" id="year" onchange="set_data('2', month,day,this)">
+                        <option value="0">-optional-</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </form>
+
+                <br/>
+                <p> Select a building </p>
+                <form>
+                    <select name="building" id="building" onchange="set_building('2', this)">
+                        <option value="0">-optional-</option>
+                        <option value="AERL">AERL</option>
+                        <option value="Allard Hall">Allard Hall</option>  
+                        <option value="Alumni Centre"> Alumni Centre </option>
+                        <option value="Alumni Centre"> Alumni Centre </option>
+                        <option value="AMS Nest"> AMS Nest </option>
+                        <option value="Ansoc"> Ansoc </option>
+                        <option value="Aquatic Centre"> Aquatic Centre </option>
+                        <option value="Asian Centre"> Asian Centre </option>
+                        <option value="Baseball Training Facility"> Baseball Training Facility </option>
+                        <option value="Beaty"> Beaty </option>
+                        <option value="Bio Sci South"> Bio Sci South </option>
+                        <option value="Bio Sci West"> Bio Sci West </option>
+                        <option value="Biomed"> Biomed </option>
+                        <option value="Bookstore-NCE"> Bookstore-NCE </option>
+                        <option value="Boulevard Lot"> Boulevard Lot </option>
+                        <option value="BRDF"> BRDF </option>
+                        <option value="Brimacombe-QMI"> Brimacombe-QMI </option>
+                        <option value="Brock Hall"> Brock Hall </option>
+                        <option value="Buchanan A,B,C"> Buchanan A,B,C </option>
+                        <option value="Buchanan D,E"> Buchanan D,E </option>
+                        <option value="Buchanan Tower"> Buchanan Tower </option>
+                        <option value="C.K. Choi"> C.K. Choi </option>
+                        <option value="Campus Energy Centre"> Campus Energy Centre </option>
+                        <option value="CCM"> CCM </option>
+                        <option value="CEME Labs"> CEME Labs </option>
+                        <option value="CEME"> CEME </option>
+                        <option value="Centre for Brain Health"> Centre for Brain Health </option>
+                        <option value="Chan Centre"> Chan Centre </option>
+                        <option value="Chan Gunn"> Chan Gunn </option>
+                        <option value="Chem Bio"> Chem Bio </option>
+                        <option value="Chem Centre"> Chem Centre </option>
+                        <option value="Chem East"> Chem East </option>
+                        <option value="Chem North"> Chem North </option>
+                        <option value="Chem South"> Chem South </option>
+                        <option value="CICSR"> CICSR </option>
+                        <option value="CIRS"> CIRS </option>
+                        <option value="Coal _ Mineral"> Coal _ Mineral </option>
+                        <option value="Cunningham"> Cunningham </option>
+                        <option value="David Lam"> David Lam </option>
+                        <option value="Doug Mitchell Thunderbird Sports Centre"> Doug Mitchell Thunderbird Sports Centre </option>
+                        <option value="EDC"> EDC </option>
+                        <option value="EOS"> EOS </option>
+                        <option value="ESB"> ESB </option>
+                        <option value="Exchange Residence"> Exchange Residence </option>
+                        <option value="FNH"> FNH </option>
+                        <option value="Forest Sci"> Forest Sci </option>
+                        <option value="Frank Forward"> Frank Forward </option>
+                        <option value="Fred Kaiser"> Fred Kaiser </option>
+                        <option value="Freddy Wood Theatre"> Freddy Wood Theatre </option>
+                        <option value="Friedman"> Friedman </option>
+                        <option value="Geography"> Geography </option>
+                        <option value="H.R. Macmillan"> H.R. Macmillan </option>
+                        <option value="Hebb"> Hebb </option>
+                        <option value="Hennings"> Hennings </option>
+                        <option value="Henry Angus"> Henry Angus </option>
+                        <option value="I.K. Barber"> I.K. Barber </option>
+                        <option value="ICICS"> ICICS </option>
+                        <option value="IRSDC"> IRSDC </option>
+                        <option value="J.B. MacDonald"> J.B. MacDonald </option>
+                        <option value="Jack Bell"> Jack Bell </option>
+                        <option value="Kenny"> Kenny </option>
+                        <option value="Klinck"> Klinck </option>
+                        <option value="Koerner Library"> Koerner Library </option>
+                        <option value="Lasserre"> Lasserre </option>
+                        <option value="Life Building"> Life Building </option>
+                        <option value="Life Sci"> Life Sci </option>
+                        <option value="Liu"> Liu </option>
+                        <option value="LMRS"> LMRS </option>
+                        <option value="Longhouse"> Longhouse </option>
+                        <option value="MacLeod"> MacLeod </option>
+                        <option value="Mathematics"> Mathematics </option>
+                        <option value="MEDC"> MEDC </option>
+                        <option value="Michael Smith"> Michael Smith </option>
+                        <option value="MOA"> MOA </option>
+                        <option value="Music"> Music </option>
+                        <option value="Neville Scarfe"> Neville Scarfe </option>
+                        <option value="NSDC"> NSDC </option>
+                        <option value="Orchard Commons"> Orchard Commons </option>
+                        <option value="Osborne"> Osborne </option>
+                        <option value="Parc Library"> Parc Library </option>
+                        <option value="Pharmacy"> Pharmacy </option>
+                        <option value="Ponderosa East"> Ponderosa East </option>
+                        <option value="Ponderosa North"> Ponderosa North </option>
+                        <option value="Ponderosa West"> Ponderosa West </option>
+                        <option value="Pulp _ Paper"> Pulp _ Paper </option>
+                        <option value="Ritsumeikan"> Ritsumeikan </option>
+                        <option value="Sing Tao"> Sing Tao </option>
+                        <option value="SPPH"> SPPH </option>
+                        <option value="SRC"> SRC </option>
+                        <option value="Strangway"> Strangway </option>
+                        <option value="Swing Space"> Swing Space </option>
+                        <option value="Tall Wood"> Tall Wood </option>
+                        <option value="Thea Koerner House"> Thea Koerner House </option>
+                        <option value="Totem Cesnaem"> Totem Cesnaem </option>
+                        <option value="Totem Park Res - QelexenHemlesen"> Totem Park Res - QelexenHemlesen </option>
+                        <option value="UBC Tennis Centre (New)"> UBC Tennis Centre (New) </option>
+                        <option value="ULTL"> ULTL </option>
+                        <option value="University Centre"> University Centre </option>
+                        <option value="USB"> USB </option>
+                        <option value="War Memorial Gymnasium"> War Memorial Gymnasium </option>
+                        <option value="Wesbrook Building"> Wesbrook Building </option>
+                        <option value="Woodward IRC"> Woodward IRC </option>
+                        <option value="Woodward Library"> Woodward Library </option>
+                    </select>
+                </form>
+
             </div>
         </div>
 
