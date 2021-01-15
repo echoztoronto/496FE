@@ -59,7 +59,6 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   if (dataset[num].month !== '0' && dataset[num].building !== '0') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
-    update_graph();
   } else {
     dataset_bool[num] = false;
     dataset_data[num] = [];
@@ -72,7 +71,6 @@ async function set_building (num, oBuildingSel) {
   if (dataset[num].month !== '0' && dataset[num].building !== '0') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
-    update_graph();
   } else {
     dataset_bool[num] = false;
     dataset_data[num] = [];

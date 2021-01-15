@@ -45,6 +45,10 @@
         <div class="about-content"> 
             <div id = "selection-notif"></div>
 
+            <div class = "graph-button">
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="update_graph()"> >>> Draw Graph! <<< </button>
+            </div>
+
             <div class="chart-selection">
                 
                 <p> Set the date </p>
@@ -564,9 +568,12 @@
                         <option value="Woodward Library"> Woodward Library </option>
                     </select>
                 </form>
-
             </div>
+
+            
         </div>
+
+        
 
         <div class = "chart-content">
             <canvas id="bar-chart" class="chart-1" width="800" height="450"> </canvas>
