@@ -1,3 +1,5 @@
+var mychart;
+var lock;
 
 var numDays = {
                 '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
@@ -6,13 +8,13 @@ var numDays = {
 
 var default_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
-var border_color = {
-  '1': "#3e95cd", '2': "#8e5ea2", '3': "#3cba9f"
+var bar_color = {
+  '1': "#3e95cd", '2': "#228B22", '3': "#3cba9f"
 }
 
-
-var mychart;
-var data_buf = [];
+var dataset_bool = {
+  '1': false, '2': false, '3': false
+};
 
 var dataset = {
   "1": {
@@ -21,12 +23,19 @@ var dataset = {
   "2": {
     'year': '0', 'month': '0', 'day': '0', 'building': '0'
   },
-
+  "3": {
+    'year': '0', 'month': '0', 'day': '0', 'building': '0'
+  },
 };
 
+var dataset_data = {
+  "1": [],
+  "2": [],
+  "3": [],
+};
 
-function set_data (num, oMonthSel, oDaysSel, oYearSel) {
-
+//called by choosing a day/month/year
+async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   var nDays, oDaysSelLgth, opt, i = 1;
 	nDays = numDays[oMonthSel[oMonthSel.selectedIndex].value];
 	if (nDays == 28 && oYearSel[oYearSel.selectedIndex].value % 4 == 0)
@@ -47,84 +56,75 @@ function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   dataset[num].day = oDaysSel.options[oDaysSel.selectedIndex].value;
   dataset[num].year = oYearSel.options[oYearSel.selectedIndex].value;
 
-  if (dataset[num].month != '0' && dataset[num].building != '0') {
-    graph_refresh(mychart);
+  if (dataset[num].month !== '0' && dataset[num].building !== '0') {
+    dataset_bool[num] = true;
+    await get_data_from_json(num);
+    update_graph();
+  } else {
+    dataset_bool[num] = false;
+    dataset_data[num] = [];
   }
 }
 
-function set_building (num, oBuildingSel) {
-
+//called by choosing a building
+async function set_building (num, oBuildingSel) {
   dataset[num].building = oBuildingSel.options[oBuildingSel.selectedIndex].value;
-  if (dataset[num].month != '0' && dataset[num].building != '0') {
-    graph_refresh(mychart);
+  if (dataset[num].month !== '0' && dataset[num].building !== '0') {
+    dataset_bool[num] = true;
+    await get_data_from_json(num);
+    update_graph();
+  } else {
+    dataset_bool[num] = false;
+    dataset_data[num] = [];
   }
 }
 
-
-
-
-
-function graph_refresh(mychart) {
-  console.log("refresh starts ");
+async function update_graph() {
+  console.log("update..........."); //
 
   if(mychart != undefined) {
-    console.log("destroy");
     mychart.destroy();
   }
-  graph_initiate();
 
-  if(dataset[2].building != '0' && dataset[2].year != '0') {
-    graph_add(2);
+  graph_init();
+  
+  if(has_valid_dataset()) {
+    var i;
+    for (i = 1; i < 4; i++) {
+      if(dataset_bool[i]) {
+        console.log(i); //
+        console.log(dataset_data[i]);//
+
+        var new_dataset = { 
+          data: dataset_data[i],
+          label: dataset[i].building,
+          backgroundColor: bar_color[i],
+          fill: false
+        };
+        console.log(new_dataset); //
+        mychart.data.datasets.push(new_dataset);
+      }
+  }
+
+  mychart.update();
+
   }
 }
 
-function graph_initiate() {
 
-	var month = dataset[1].month;
-	var day = dataset[1].day;
-	var year = dataset[1].year;	
-  var building = dataset[1].building;
-  var pathName = "js/data/historical/".concat(building, ".json");
+//init a new blank graph
+function graph_init() {
 
-  var fs = $(document).ready(function() {
-    $.ajax({
-        type: "GET",
-        url: pathName ,
-        dataType: "json",
-        success: function(data) {
-          if(valid_data(data, year, month, day)) {
-            drawGraph(data[year][month][day], building, year, month, day);
-            document.getElementById("selection-notif").innerHTML = " ";
-          } 
-          else {
-            document.getElementById("selection-notif").innerHTML = 
-            "Sorry, currently we don't have data for ".concat(building," on ",month,"/",day,"/",year);;
-          }
-        }
-      });
-  });
-}
-
-
-function drawGraph(data_lines, buildingName, year, month, day) {
-  console.log("drawgraph");
-
-  mychart = new Chart(document.getElementById("line-chart"), {
-    type: 'line',
+  mychart = new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
     data: {
       labels: default_labels,
-      datasets: [{ 
-          data: data_lines,
-          label: buildingName,
-          borderColor: border_color['1'],
-          fill: false
-        }
-      ]
+      datasets: []
     },
     options: {
       title: {
         display: true,
-        text: "Historical Load of ".concat(month, "/", day, "/", year),
+        text: "Historical Load",
         fontSize: 30       
       },
       legend:{
@@ -151,8 +151,9 @@ function drawGraph(data_lines, buildingName, year, month, day) {
     }
   });
 }
-  
-function graph_add(num) {
+
+//access to local json file and find if there are valid data
+async function get_data_from_json(num) {
 
 	var month = dataset[num].month;
 	var day = dataset[num].day;
@@ -167,28 +168,18 @@ function graph_add(num) {
         dataType: "json",
         success: function(data) {
           if(valid_data(data, year, month, day)) {
-            addData(num, mychart, building, data[year][month][day]);
+            dataset_bool[num] = true;
+            dataset_data[num] = data[year][month][day];
             document.getElementById("selection-notif").innerHTML = " ";
           } 
           else {
+            dataset_bool[num] = false;
             document.getElementById("selection-notif").innerHTML = 
             "Sorry, currently we don't have data for ".concat(building," on ",month,"/",day,"/",year);
           }
         }
       });
   });
-}
-
-
-function addData(num, mychart, building, data_lines) {
-  var new_dataset = { 
-    data: data_lines,
-    label: building,
-    borderColor: border_color[num],
-    fill: false
-  };
-  mychart.data.datasets.push(new_dataset);
-  mychart.update(0);
 }
 
 
@@ -200,6 +191,14 @@ function valid_data(data, year, month, day) {
         return true;
       }
     }
+  }
+  return false;
+}
+
+function has_valid_dataset() {
+  var i;
+  for (i = 1; i < 4; i++) {
+    if(dataset_bool[i]) {return true;}
   }
   return false;
 }
