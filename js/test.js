@@ -6,7 +6,7 @@ var energyData;      //building ID -> year -> month -> day
 var fs1 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "../../data/buildingIDs.json",
+      url: "/496FE/data/buildingIDs.json",
       dataType: "json",
       success: function(data) {
         buildingIDs = data;
@@ -17,7 +17,7 @@ var fs1 = $(document).ready(function() {
 var fs2 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "../../data/UBCEnergy.json",
+      url: "/496FE/data/UBCEnergy.json",
       dataType: "json",
       success: function(data) {
         energyData = data;
