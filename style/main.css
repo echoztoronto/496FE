@@ -65,11 +65,14 @@ p {
     margin-left: 5%;
     text-align: center;
     background-color: white;
-    height: 2.5em;
+    height: 4em;
     padding-top: 1em;
-    font-size: 2em;
+    font-size: 1.7em;
     color: #d34836;
+    white-space: nowrap;
 }
+
+
 
 .chart-selection {
     float:left;
