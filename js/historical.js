@@ -1,5 +1,35 @@
-var mychart;
-var lock;
+var mychart;         //graph variable 
+var buildingIDs;     //building name -> building ID
+var energyData;      //building ID -> year -> month -> day
+
+
+var fs1 = $(document).ready(function() {
+  $.ajax({
+      type: "GET",
+      url: "/496FE/data/buildingIDs.json",
+      dataType: "json",
+      success: function(data) {
+        buildingIDs = data;
+      }
+    });
+});
+
+var fs2 = $(document).ready(function() {
+  $.ajax({
+      type: "GET",
+      url: "/496FE/data/UBCEnergy.json",
+      dataType: "json",
+      success: function(data) {
+        energyData = data;
+      },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    });
+});
+
+
 
 var numDays = {
                 '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
@@ -59,6 +89,7 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   if (dataset[num].month !== '0' && dataset[num].building !== '0') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
+    update_graph(); //test
   } else {
     dataset_bool[num] = false;
     dataset_data[num] = [];
@@ -71,6 +102,7 @@ async function set_building (num, oBuildingSel) {
   if (dataset[num].month !== '0' && dataset[num].building !== '0') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
+    update_graph(); //test
   } else {
     dataset_bool[num] = false;
     dataset_data[num] = [];
@@ -78,7 +110,6 @@ async function set_building (num, oBuildingSel) {
 }
 
 async function update_graph() {
-  console.log("update..........."); //
 
   if(mychart != undefined) {
     mychart.destroy();
@@ -90,8 +121,6 @@ async function update_graph() {
     var i;
     for (i = 1; i < 4; i++) {
       if(dataset_bool[i]) {
-        console.log(i); //
-        console.log(dataset_data[i]);//
 
         var new_dataset = { 
           data: dataset_data[i],
@@ -99,7 +128,6 @@ async function update_graph() {
           backgroundColor: bar_color[i],
           fill: false
         };
-        console.log(new_dataset); //
         mychart.data.datasets.push(new_dataset);
       }
   }
@@ -156,37 +184,31 @@ async function get_data_from_json(num) {
 	var month = dataset[num].month;
 	var day = dataset[num].day;
 	var year = dataset[num].year;	
-  var building = dataset[num].building;
-  var pathName = "js/data/historical/".concat(building, ".json");
+  var bID = buildingIDs[dataset[num].building];
 
-  var fs = $(document).ready(function() {
-    $.ajax({
-        type: "GET",
-        url: pathName ,
-        dataType: "json",
-        success: function(data) {
-          if(valid_data(data, year, month, day)) {
-            dataset_bool[num] = true;
-            dataset_data[num] = data[year][month][day];
-            document.getElementById("selection-notif").innerHTML = " ";
-          } 
-          else {
-            dataset_bool[num] = false;
-            document.getElementById("selection-notif").innerHTML = 
-            "Sorry, currently we don't have data for ".concat(building," on ",month,"/",day,"/",year);
-          }
-        }
-      });
-  });
+  if(valid_data(energyData, year, month, day, bID)) {
+    dataset_bool[num] = true;
+    dataset_data[num] = energyData[bID][year][month][day];
+    document.getElementById("selection-notif").innerHTML = " ";
+  } 
+  else {
+    dataset_bool[num] = false;
+    document.getElementById("selection-notif").innerHTML = 
+    "Sorry, currently we don't have data for ".concat(dataset[num].building," on ",month,"/",day,"/",year);
+  }
+
+
 }
 
 
-// validate if there is data for a specific date
-function valid_data(data, year, month, day) {
-  if (year in data) {
-    if (month in data[year]) {
-      if (day in data[year][month]) {
-        return true;
+// validate if there is data for a specific date and building ID
+function valid_data(data, year, month, day, bID) {
+  if(bID in data) {
+    if (year in data[bID]) {
+      if (month in data[bID][year]) {
+        if (day in data[bID][year][month]) {
+          return true;
+        }
       }
     }
   }

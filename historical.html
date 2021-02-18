@@ -43,11 +43,9 @@
     <div class="container-fluid">
         <!--Selection panel-->
         <div class="about-content"> 
+
             <div id = "selection-notif"></div>
 
-            <div class = "graph-button">
-                <button type="button" class="btn btn-success btn-lg btn-block" onclick="update_graph()"> >>> Draw Graph! <<< </button>
-            </div>
 
             <div class="chart-selection">
                 <div id = "set1">
@@ -581,8 +579,9 @@
             <canvas id="bar-chart" class="chart-1" width="800" height="450"> </canvas>
         </div>
         
-        <script src="js/historical.js"></script>
-        
+        <script src="data/buildingIDs.json"></script>
+        <script src="data/UBCEnergy.json"></script>
+        <script type="text/javascript" src="js/historical.js"></script>
 
 
 
