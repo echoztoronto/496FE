@@ -64,13 +64,32 @@ var mychart = new Chart(document.getElementById("bar-chart"), {
           labelString: "Time of the day"
         }
       }],
-      yAxes: [{
-        scaleLabel: {
-          fontSize: 20,
-          display:true,
-          labelString: "Load (kW)"
+      yAxes: [
+        {
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          scaleLabel: {
+            fontSize: 20,
+            display:true,
+            labelString: "Load (kW)"
+          }
+        },
+        {
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          scaleLabel: {
+            fontSize: 20,
+            display:true,
+            labelString: "Percentage Error (%)",
+          },
+          ticks: {
+            max: 100,
+            min: -100
+          }
         }
-      }]
+      ]
     }  
   }
 });
@@ -103,6 +122,7 @@ var dataset_bool = {
 var dataset_data = {
   "1": [],  //actual data
   "2": [],  //predicted data
+  "3": [],  //percentage error
 };
 
 //called by choosing a day/month/year
@@ -145,6 +165,21 @@ function update_graph() {
     mychart.destroy();
   }
   graph_init();
+
+  //percentage error line
+  if(dataset_bool[1]&&dataset_bool[2]) {
+    dataset_data[3] = get_percentage_error(dataset_data[1], dataset_data[2]);
+    var new_dataset = { 
+      data: dataset_data[3],
+      label: "Percentage Error",
+      borderColor: 'black',
+      borderWidth: 2,
+      type: 'line',
+      fill: false,
+      yAxisID: 'B',
+    };
+    mychart.data.datasets.push(new_dataset);
+  }
   
   var i;
   for (i = 1; i < 3; i++) {
@@ -153,11 +188,14 @@ function update_graph() {
         data: dataset_data[i],
         label: bar_label[i],
         backgroundColor: bar_color[i],
-        fill: false
+        fill: false,
+        yAxisID: 'A',
       };
       mychart.data.datasets.push(new_dataset);
     }
   }
+
+
   mychart.update();
 }
 
@@ -189,13 +227,32 @@ function graph_init() {
             labelString: "Time of the day"
           }
         }],
-        yAxes: [{
-          scaleLabel: {
-            fontSize: 20,
-            display:true,
-            labelString: "Load (kW)"
+        yAxes: [
+          {
+            id: 'A',
+            type: 'linear',
+            position: 'left',
+            scaleLabel: {
+              fontSize: 20,
+              display:true,
+              labelString: "Load (kW)"
+            }
+          },
+          {
+            id: 'B',
+            type: 'linear',
+            position: 'right',
+            scaleLabel: {
+              fontSize: 20,
+              display:true,
+              labelString: "Percentage Error (%)",
+            },
+            ticks: {
+              max: 100,
+              min: -100
+            }
           }
-        }]
+        ]
       }  
     }
   });
@@ -252,3 +309,19 @@ function valid_data(data, year, month, day, bID) {
   return false;
 }
 
+// calculate percentage error of two data sets
+function get_percentage_error(actual, predicted) {
+  if(actual.length != predicted.length) {
+    console.log("two datasets have different size");
+    return [];
+  }
+
+  var len = actual.length;
+  var i;
+  var error = [];
+  for (i = 0; i < len; i++) {
+    error.push(100*Math.abs(actual[i]-predicted[i])/actual[i]);
+  }
+
+  return error;
+}
