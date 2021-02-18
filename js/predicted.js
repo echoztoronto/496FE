@@ -1,4 +1,3 @@
-var mychart;         //graph variable 
 var buildingIDs;     //building name -> building ID
 var energyData;      //building ID -> year -> month -> day
 var predictedData;   //building ID -> year -> month -> day
@@ -39,6 +38,42 @@ var fs3 = $(document).ready(function() {
     });
 });
 
+//graph variable 
+var mychart = new Chart(document.getElementById("bar-chart"), {
+  type: 'bar',
+  data: {
+    labels: default_labels,
+    datasets: []
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Historical Load vs. Predicted Load",
+      fontSize: 30       
+    },
+    legend:{
+      labels: {
+        fontSize: 18
+      }
+    },
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          fontSize: 20,
+          display:true,
+          labelString: "Time of the day"
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          fontSize: 20,
+          display:true,
+          labelString: "Load (kW)"
+        }
+      }]
+    }  
+  }
+});
 
 
 var numDays = {
@@ -105,7 +140,7 @@ function set_building (oBuildingSel) {
   update_graph(); 
 }
 
-async function update_graph() {
+function update_graph() {
   if(mychart != undefined) {
     mychart.destroy();
   }

@@ -1,4 +1,3 @@
-var mychart;         //graph variable 
 var buildingIDs;     //building name -> building ID
 var energyData;      //building ID -> year -> month -> day
 
@@ -29,7 +28,42 @@ var fs2 = $(document).ready(function() {
     });
 });
 
-
+//graph variable 
+var mychart = new Chart(document.getElementById("bar-chart"), {
+  type: 'bar',
+  data: {
+    labels: default_labels,
+    datasets: []
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Historical Load",
+      fontSize: 30       
+    },
+    legend:{
+      labels: {
+        fontSize: 18
+      }
+    },
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          fontSize: 20,
+          display:true,
+          labelString: "Time of the day"
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          fontSize: 20,
+          display:true,
+          labelString: "Load (kW)"
+        }
+      }]
+    }  
+  }
+});
 
 var numDays = {
                 '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
