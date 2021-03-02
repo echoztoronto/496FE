@@ -107,7 +107,7 @@ var bar_color = {
 };
 
 var bar_label = {
-  '1': "Predicted Load", '2': "Predicted Load"
+  '1': "Historical Load", '2': "Predicted Load"
 };
 
 var dataset = {
