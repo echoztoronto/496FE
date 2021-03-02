@@ -84,7 +84,10 @@ var mychart = new Chart(document.getElementById("bar-chart"), {
             display:true,
             labelString: "Percentage Error (%)",
           },
-          
+          ticks: {
+            max: 100,
+            min: -100
+          }
         }
       ]
     }  
