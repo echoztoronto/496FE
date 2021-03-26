@@ -240,7 +240,7 @@ function graph_init() {
             scaleLabel: {
               fontSize: 20,
               display:true,
-              labelString: "Humidity"
+              labelString: "Humidity (%)"
             }
           },
         ]
