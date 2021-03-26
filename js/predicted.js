@@ -320,7 +320,7 @@ function get_percentage_error(actual, predicted) {
   var i;
   var error = [];
   for (i = 0; i < len; i++) {
-    error.push(100*Math.abs(actual[i]-predicted[i])/actual[i]);
+    error.push((100*Math.abs(actual[i]-predicted[i])/actual[i]).toFixed(2));
   }
 
   return error;
