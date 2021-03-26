@@ -122,11 +122,11 @@ p {
 
 .arrow {
     border: solid rgb(0, 0, 0);
-    border-width: 0 10px 10px 0;
+    border-width: 0 15px 15px 0;
     display: inline-block;
     padding: 3px;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin-left: 130px;
     margin-right: 130px;
 }
@@ -144,8 +144,10 @@ p {
   
 .right:hover {
     box-shadow: 5px 10px #888888;
+    cursor: pointer;
 }
 
 .left:hover {
     box-shadow: 5px 10px #888888;
+    cursor: pointer;
 }
