@@ -144,12 +144,12 @@ function go_previous() {
   }
 
   if(chosen_month == 1) {
-    chosen_year = chosen_year -1; 
+    chosen_year = Number(chosen_year) - 1; 
     chosen_month = 12;
     document.getElementById("month").value = chosen_month;
     document.getElementById("year").value = chosen_year;
   } else { 
-    chosen_month = chosen_month -1;
+    chosen_month = Number(chosen_month) - 1;
     document.getElementById("month").value = chosen_month;
   }
   
@@ -165,12 +165,12 @@ function go_next() {
   }
 
   if(chosen_month == 12) {
-    chosen_year = chosen_year +1; 
+    chosen_year = Number(chosen_year) + 1; 
     chosen_month = 1;
     document.getElementById("month").value = chosen_month;
     document.getElementById("year").value = chosen_year;
   } else {
-    chosen_month = chosen_month +1;
+    chosen_month = Number(chosen_month) + 1;
     document.getElementById("month").value = chosen_month;
   }
 
