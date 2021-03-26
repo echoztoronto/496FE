@@ -13,7 +13,7 @@ let data_is_valid = true;
 
 const attribute_colors = {"load": "rgb(72,72,72)", "temp": "#ffb366", "hum": "#6666ff"};
 const month_name = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"};
-const default_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+const default_labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 const notif_element = document.getElementById("selection-notif");
 
 // for github page:  url: "/496FE/data/buildingIDs.json" 
