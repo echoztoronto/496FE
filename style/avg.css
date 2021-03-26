@@ -50,18 +50,12 @@ p {
 }
 
 .info-content {
-    margin-top: 200px;
-}
-
-.viewer-container {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 20px;
+    position:absolute;
+    top:200px;
 }
 
 .inline  {
     margin-top: 0;
-    display: inline-block!important;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 1.5em;
     text-align: center;
@@ -98,41 +92,60 @@ p {
 
 
 .chart-selection {
-    float:left;
+    display: inline-block;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 1.5em;
-    margin-left: 5%;
-}
-
-#set1 {
+    margin-left: 20px;
     background-color: #3e96cd85;
 }
-#set2 {
-    background-color: #bc509178;
-}
-#set3 {
-    background-color: #58508d81;
-}
-
 
 .chart-selection p {
     font-size: 1em;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-
 .chart-content {
     padding-top: 5%;
-    margin-left: 35%;
+    margin-left: 20%;
     margin-right: 5%;
     width: 60vw;
     height: 40vw;
-    min-width: 700px;
+    min-width: 400px;
     min-height: 300px;
-    background-color: #f3f3f3;
 }
 
 #bar-chart {
-    min-width: 700px;
+    min-width: 400px;
     background-color: #f3f3f3;
+}
+
+
+.arrow {
+    border: solid rgb(0, 0, 0);
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+    padding: 3px;
+    width: 50px;
+    height: 50px;
+    margin-left: 130px;
+    margin-right: 130px;
+}
+
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+  
+.right:hover {
+    box-shadow: 5px 10px #888888;
+}
+
+.left:hover {
+    box-shadow: 5px 10px #888888;
 }
