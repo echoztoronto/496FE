@@ -1,6 +1,40 @@
 var buildingIDs;     //building name -> building ID
 var energyData;      //building ID -> year -> month -> day
+var mychart = null; 
 
+
+var numDays = {
+  '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
+  '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31
+};
+
+var default_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
+var bar_color = {
+  '1': "#3e95cd", '2': "#bc5090", '3': "#58508d"
+}
+
+var dataset_bool = {
+  '1': false, '2': false, '3': false  
+};
+
+var dataset = {
+  "1": {
+  'year': '2015', 'month': '1', 'day': '1', 'building': 'AERL'
+  },
+  "2": {
+  'year': '2015', 'month': '', 'day': '', 'building': ''
+  },
+  "3": {
+  'year': '2015', 'month': '', 'day': '', 'building': ''
+  },
+};
+
+var dataset_data = {
+  "1": [],
+  "2": [],
+  "3": [],
+};
 
 var fs1 = $(document).ready(function() {
   $.ajax({
@@ -20,6 +54,7 @@ var fs2 = $(document).ready(function() {
       dataType: "json",
       success: function(data) {
         energyData = data;
+        update_graph();
       },
       error: function(xhr, desc, err) {
         console.log(xhr);
@@ -28,42 +63,6 @@ var fs2 = $(document).ready(function() {
     });
 });
 
-//graph variable
-var mychart = null; 
-update_graph();
-
-var numDays = {
-                '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
-                '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31
-              };
-
-var default_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-
-var bar_color = {
-  '1': "#3e95cd", '2': "#bc5090", '3': "#58508d"
-}
-
-var dataset_bool = {
-  '1': false, '2': false, '3': false
-};
-
-var dataset = {
-  "1": {
-    'year': '2015', 'month': '1', 'day': '1', 'building': 'AERL'
-  },
-  "2": {
-    'year': '2015', 'month': '', 'day': '', 'building': ''
-  },
-  "3": {
-    'year': '2015', 'month': '', 'day': '', 'building': ''
-  },
-};
-
-var dataset_data = {
-  "1": [],
-  "2": [],
-  "3": [],
-};
 
 //called by choosing a day/month/year
 async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
@@ -98,7 +97,7 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
 }
 
 //called by choosing a building
-async function set_building (num, oBuildingSel) {
+function set_building (num, oBuildingSel) {
   dataset[num].building = oBuildingSel.options[oBuildingSel.selectedIndex].value;
   if (dataset[num].day !== '' && dataset[num].month !== '' && dataset[num].building !== '') {
     dataset_bool[num] = true;
@@ -110,7 +109,7 @@ async function set_building (num, oBuildingSel) {
   }
 }
 
-async function update_graph() {
+function update_graph() {
 
   if(mychart != undefined) {
     mychart.destroy();
