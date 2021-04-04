@@ -49,7 +49,7 @@
                 <div id = "set1">
                 <p> Set the date </p>
                 <form>
-                    <select name="month" id="month" onchange="set_data('1',this,day,year)">
+                    <select name="month" id="month1" onchange="set_data('1',this,day,year)">
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -63,7 +63,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select name="day" id="day" onchange="set_data('1',month,this,year)">
+                    <select name="day" id="day1" onchange="set_data('1',month,this,year)">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -96,7 +96,7 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select name="year" id="year" onchange="set_data('1',month,day,this)">
+                    <select name="year" id="year1" onchange="set_data('1',month,day,this)">
                         <option value="2015">2015</option>
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
@@ -108,7 +108,7 @@
                 <br/>
                 <p> Select a building </p>
                 <form>
-                    <select name="building" id="building" onchange="set_building('1', this)">
+                    <select name="building" id="building1" onchange="set_building('1', this)">
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
                         <option value="Alumni Centre"> Alumni Centre </option>
@@ -225,7 +225,7 @@
                 <div id="set2">
                 <p> Set the date </p>
                 <form>
-                    <select name="month" id="month" onchange="set_data('2', this,day,year)">
+                    <select name="month" id="month2" onchange="set_data('2', this,day,year)">
                         <option value="">-optional-</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -240,7 +240,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select name="day" id="day" onchange="set_data('2', month,this,year)">
+                    <select name="day" id="day2" onchange="set_data('2', month,this,year)">
                         <option value="">-optional-</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -274,7 +274,7 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select name="year" id="year" onchange="set_data('2', month,day,this)">
+                    <select name="year" id="year2" onchange="set_data('2', month,day,this)">
                         <option value="2015">2015</option>
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
@@ -286,7 +286,7 @@
                 <br/>
                 <p> Select a building </p>
                 <form>
-                    <select name="building" id="building" onchange="set_building('2', this)">
+                    <select name="building" id="building2" onchange="set_building('2', this)">
                         <option value="">-optional-</option>
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
@@ -404,7 +404,7 @@
                 <div id="set3">
                 <p> Set the date </p>
                 <form>
-                    <select name="month" id="month" onchange="set_data('3', this,day,year)">
+                    <select name="month" id="month3" onchange="set_data('3', this,day,year)">
                         <option value="">-optional-</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -419,7 +419,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select name="day" id="day" onchange="set_data('3', month,this,year)">
+                    <select name="day" id="day3" onchange="set_data('3', month,this,year)">
                         <option value="">-optional-</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -453,7 +453,7 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select name="year" id="year" onchange="set_data('3', month,day,this)">
+                    <select name="year" id="year3" onchange="set_data('3', month,day,this)">
                         <option value="2015">2015</option>
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
@@ -465,7 +465,7 @@
                 <br/>
                 <p> Select a building </p>
                 <form>
-                    <select name="building" id="building" onchange="set_building('3', this)">
+                    <select name="building" id="building3" onchange="set_building('3', this)">
                         <option value="">-optional-</option>
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
@@ -575,7 +575,12 @@
                 </div>
             </div>
 
-            
+            <div class="arrow-container"> 
+                <div class="arrow-month-text" onclick="go_previous_month()"> &lt;&lt; LAST MONTH </div>
+                <div class="arrow-day-text" onclick="go_previous_day()"> ← last day </div>
+                <div class="arrow-day-text" onclick="go_next_day()">next day → </div>
+                <div class="arrow-month-text" onclick="go_next_month()">LAST MONTH &gt;&gt;</div>
+            </div>
         </div>
 
         

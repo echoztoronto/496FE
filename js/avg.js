@@ -18,10 +18,16 @@ const notif_element = document.getElementById("selection-notif");
 
 // for github page:  url: "/496FE/data/buildingIDs.json" 
 // for self testing: url: "../../data/buildingIDs.json",
+
+let dev_mode = false;
+let local_url = '';
+if(dev_mode) local_url = "../../";
+else local_url = "/496FE/";
+
 const fs1 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/energyAvg.json",
+      url: local_url + "data/energyAvg.json",
       dataType: "json",
       success: function(data) {
         energyAvg = data;
@@ -32,7 +38,7 @@ const fs1 = $(document).ready(function() {
 const fs2 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/weatherAvg.json",
+      url: local_url + "data/weatherAvg.json",
       dataType: "json",
       success: function(data) {
         weatherAvg = data;

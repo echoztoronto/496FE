@@ -2,7 +2,6 @@ var buildingIDs;     //building name -> building ID
 var energyData;      //building ID -> year -> month -> day
 var mychart = null; 
 
-
 var numDays = {
   '1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30,
   '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31
@@ -36,10 +35,19 @@ var dataset_data = {
   "3": [],
 };
 
+var selection_valid = {
+  '1': true, '2': false, '3': false  
+}
+
+let dev_mode = false;
+let local_url = '';
+if(dev_mode) local_url = "../../";
+else local_url = "/496FE/";
+
 var fs1 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/buildingIDs.json",
+      url: local_url + "data/buildingIDs.json",
       dataType: "json",
       success: function(data) {
         buildingIDs = data;
@@ -50,7 +58,7 @@ var fs1 = $(document).ready(function() {
 var fs2 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/UBCEnergy.json",
+      url: local_url + "data/UBCEnergy.json",
       dataType: "json",
       success: function(data) {
         energyData = data;
@@ -223,4 +231,155 @@ function has_valid_dataset() {
     if(dataset_bool[i]) {return true;}
   }
   return false;
+}
+
+function check_selection_valid() {
+  for(let i = 1; i < 4; i++) {
+    if(dataset[i].month != '' && dataset[i].day != '' && dataset[i].building != '') {
+      selection_valid[i] = true;
+    } else selection_valid[i] = false;
+  }
+}
+
+
+function go_previous_day() {
+  if(dataset[1].year == 2015 && dataset[1].month <= 1 && dataset[1].day <= 1) return;
+
+  if(dataset[1].month == 1 && dataset[1].day == 1 ) {
+    dataset[1].year = Number(dataset[1].year) - 1; 
+    dataset[1].month = 12;
+    dataset[1].day = 31;
+  } else if(dataset[1].day == 1){
+    dataset[1].month = Number(dataset[1].month) - 1;
+    dataset[1].day = numDays[dataset[1].month];
+  } else { 
+    dataset[1].day = Number(dataset[1].day) - 1;
+  }
+
+  document.getElementById("month1").value = dataset[1].month;
+  document.getElementById("year1").value = dataset[1].year;
+  document.getElementById("day1").value = dataset[1].day;
+  document.getElementById("month2").value = dataset[1].month;
+  document.getElementById("year2").value = dataset[1].year;
+  document.getElementById("day2").value = dataset[1].day;
+  document.getElementById("month3").value = dataset[1].month;
+  document.getElementById("year3").value = dataset[1].year;
+  document.getElementById("day3").value = dataset[1].day;
+
+  for(let i = 1; i < 4; i++) {
+    dataset[i].year = dataset[1].year;
+    dataset[i].month = dataset[1].month;
+    dataset[i].day = dataset[1].day;
+  }
+
+  check_selection_valid();
+  for(let i = 1; i < 4; i++) {
+    if(selection_valid[i]) get_data_from_json(i);
+  }
+
+  update_graph(); 
+}
+
+function go_next_day() {
+  if(dataset[1].year == 2019 && dataset[1].month == 12 && dataset[1].day >= 31)  return;
+
+  if(dataset[1].month == 12 && dataset[1].day == 31 ) {
+    dataset[1].year = Number(dataset[1].year) + 1; 
+    dataset[1].month = 1;
+    dataset[1].day = 1;
+  } else if(dataset[1].day == numDays[dataset[1].month]){
+    dataset[1].month = Number(dataset[1].month) + 1;
+    dataset[1].day = 1;
+  } else { 
+    dataset[1].day = Number(dataset[1].day) + 1;
+  }
+
+  document.getElementById("month1").value = dataset[1].month;
+  document.getElementById("year1").value = dataset[1].year;
+  document.getElementById("day1").value = dataset[1].day;
+  document.getElementById("month2").value = dataset[1].month;
+  document.getElementById("year2").value = dataset[1].year;
+  document.getElementById("day2").value = dataset[1].day;
+  document.getElementById("month3").value = dataset[1].month;
+  document.getElementById("year3").value = dataset[1].year;
+  document.getElementById("day3").value = dataset[1].day;
+
+  for(let i = 1; i < 4; i++) {
+    dataset[i].year = dataset[1].year;
+    dataset[i].month = dataset[1].month;
+    dataset[i].day = dataset[1].day;
+  }
+
+  check_selection_valid();
+  for(let i = 1; i < 4; i++) {
+    if(selection_valid[i]) get_data_from_json(i);
+  }
+  update_graph(); 
+}
+
+
+function go_previous_month() {
+  if(dataset[1].year == 2015 && dataset[1].month <= 1) return;
+
+  if(dataset[1].month == 1) {
+    dataset[1].year = Number(dataset[1].year) - 1; 
+    dataset[1].month = 12;
+  } else { 
+    dataset[1].month = Number(dataset[1].month) - 1;
+  }
+
+  document.getElementById("month1").value = dataset[1].month;
+  document.getElementById("year1").value = dataset[1].year;
+  document.getElementById("day1").value = dataset[1].day;
+  document.getElementById("month2").value = dataset[1].month;
+  document.getElementById("year2").value = dataset[1].year;
+  document.getElementById("day2").value = dataset[1].day;
+  document.getElementById("month3").value = dataset[1].month;
+  document.getElementById("year3").value = dataset[1].year;
+  document.getElementById("day3").value = dataset[1].day;
+
+  for(let i = 1; i < 4; i++) {
+    dataset[i].year = dataset[1].year;
+    dataset[i].month = dataset[1].month;
+    dataset[i].day = dataset[1].day;
+  }
+
+  check_selection_valid();
+  for(let i = 1; i < 4; i++) {
+    if(selection_valid[i]) get_data_from_json(i);
+  }
+  update_graph(); 
+}
+
+function go_next_month() {
+  if(dataset[1].year == 2019 && dataset[1].month == 12)  return;
+
+  if(dataset[1].month == 12) {
+    dataset[1].year = Number(dataset[1].year) + 1; 
+    dataset[1].month = 1;
+  } else {
+    dataset[1].month = Number(dataset[1].month) + 1;
+  }
+
+  document.getElementById("month1").value = dataset[1].month;
+  document.getElementById("year1").value = dataset[1].year;
+  document.getElementById("day1").value = dataset[1].day;
+  document.getElementById("month2").value = dataset[1].month;
+  document.getElementById("year2").value = dataset[1].year;
+  document.getElementById("day2").value = dataset[1].day;
+  document.getElementById("month3").value = dataset[1].month;
+  document.getElementById("year3").value = dataset[1].year;
+  document.getElementById("day3").value = dataset[1].day;
+
+  for(let i = 1; i < 4; i++) {
+    dataset[i].year = dataset[1].year;
+    dataset[i].month = dataset[1].month;
+    dataset[i].day = dataset[1].day;
+  }
+
+  check_selection_valid();
+  for(let i = 1; i < 4; i++) {
+    if(selection_valid[i]) get_data_from_json(i);
+  }
+  update_graph(); 
 }

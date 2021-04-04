@@ -1,14 +1,20 @@
 var buildingIDs;     //building name -> building ID
 var energyData;      //building ID -> year -> month -> day
 var predictedData;   //building ID -> year -> month -> day
+const notif_element = document.getElementById("selection-notif");
 
 // for github page:  url: "/496FE/data/buildingIDs.json" 
 // for self testing: url: "../../data/buildingIDs.json",
 
+let dev_mode = false;
+let local_url = '';
+if(dev_mode) local_url = "../../";
+else local_url = "/496FE/";
+
 var fs1 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/buildingIDs.json", 
+      url: local_url + "data/buildingIDs.json", 
       dataType: "json",
       success: function(data) {
         buildingIDs = data;
@@ -19,7 +25,7 @@ var fs1 = $(document).ready(function() {
 var fs2 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/UBCEnergy.json",
+      url: local_url + "data/UBCEnergy.json",
       dataType: "json",
       success: function(data) {
         energyData = data;
@@ -30,7 +36,7 @@ var fs2 = $(document).ready(function() {
 var fs3 = $(document).ready(function() {
   $.ajax({
       type: "GET",
-      url: "/496FE/data/Predicted.json",
+      url:  local_url + "data/Predicted.json",
       dataType: "json",
       success: function(data) {
         predictedData = data;
@@ -301,6 +307,7 @@ function valid_data(data, year, month, day, bID) {
     if (year in data[bID]) {
       if (month in data[bID][year]) {
         if (day in data[bID][year][month]) {
+          if(data[bID][year][month][day][1] == null) return false;
           return true;
         }
       }
@@ -324,4 +331,83 @@ function get_percentage_error(actual, predicted) {
   }
 
   return error;
+}
+
+
+
+function go_previous_day() {
+  if(dataset.year == 2019 && dataset.month <= 1 && dataset.day <= 1) return;
+
+  if(dataset.month == 1 && dataset.day == 1 ) {
+    dataset.year = Number(dataset.year) - 1; 
+    dataset.month = 12;
+    dataset.day = 31;
+  } else if(dataset.day == 1){
+    dataset.month = Number(dataset.month) - 1;
+    dataset.day = numDays[dataset.month];
+  } else { 
+    dataset.day = Number(dataset.day) - 1;
+  }
+
+  document.getElementById("month").value = dataset.month;
+  document.getElementById("year").value = dataset.year;
+  document.getElementById("day").value = dataset.day;
+  get_data_from_json();
+  update_graph(); 
+}
+
+function go_next_day() {
+  if(dataset.year == 2019 && dataset.month == 12 && dataset.day >= 31)  return;
+
+  if(dataset.month == 12 && dataset.day == 31 ) {
+    dataset.year = Number(dataset.year) + 1; 
+    dataset.month = 1;
+    dataset.day = 1;
+  } else if(dataset.day == numDays[dataset.month]){
+    dataset.month = Number(dataset.month) + 1;
+    dataset.day = 1;
+  } else { 
+    dataset.day = Number(dataset.day) + 1;
+  }
+
+  document.getElementById("month").value = dataset.month;
+  document.getElementById("year").value = dataset.year;
+  document.getElementById("day").value = dataset.day;
+  get_data_from_json();
+  update_graph(); 
+}
+
+
+function go_previous_month() {
+  if(dataset.year == 2019 && dataset.month <= 1) return;
+
+  if(dataset.month == 1) {
+    dataset.year = Number(dataset.year) - 1; 
+    dataset.month = 12;
+    document.getElementById("month").value = dataset.month;
+    document.getElementById("year").value = dataset.year;
+  } else { 
+    dataset.month = Number(dataset.month) - 1;
+    document.getElementById("month").value = dataset.month;
+  }
+  
+  get_data_from_json();
+  update_graph(); 
+}
+
+function go_next_month() {
+  if(dataset.year == 2019 && dataset.month == 12)  return;
+
+  if(dataset.month == 12) {
+    dataset.year = Number(dataset.year) + 1; 
+    dataset.month = 1;
+    document.getElementById("month").value = dataset.month;
+    document.getElementById("year").value = dataset.year;
+  } else {
+    dataset.month = Number(dataset.month) + 1;
+    document.getElementById("month").value = dataset.month;
+  }
+
+  get_data_from_json();
+  update_graph(); 
 }
