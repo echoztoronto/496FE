@@ -54,6 +54,7 @@ var fs2 = $(document).ready(function() {
       dataType: "json",
       success: function(data) {
         energyData = data;
+        get_data_from_json(1);
         update_graph();
       },
       error: function(xhr, desc, err) {
@@ -207,6 +208,7 @@ function valid_data(data, year, month, day, bID) {
     if (year in data[bID]) {
       if (month in data[bID][year]) {
         if (day in data[bID][year][month]) {
+          if(data[bID][year][month][day][1] == null) return false;
           return true;
         }
       }
