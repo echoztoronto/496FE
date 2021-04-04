@@ -226,7 +226,7 @@
                 <p> Set the date </p>
                 <form>
                     <select name="month" id="month" onchange="set_data('2', this,day,year)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -241,7 +241,7 @@
                         <option value="12">December</option>
                     </select>
                     <select name="day" id="day" onchange="set_data('2', month,this,year)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -275,9 +275,11 @@
                         <option value="31">31</option>
                     </select>
                     <select name="year" id="year" onchange="set_data('2', month,day,this)">
-                        <option value="0">-optional-</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
                         <option value="2019">2019</option>
-                        <option value="2020">2020</option>
                     </select>
                 </form>
 
@@ -285,7 +287,7 @@
                 <p> Select a building </p>
                 <form>
                     <select name="building" id="building" onchange="set_building('2', this)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
                         <option value="Alumni Centre"> Alumni Centre </option>
@@ -403,7 +405,7 @@
                 <p> Set the date </p>
                 <form>
                     <select name="month" id="month" onchange="set_data('3', this,day,year)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -418,7 +420,7 @@
                         <option value="12">December</option>
                     </select>
                     <select name="day" id="day" onchange="set_data('3', month,this,year)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -452,9 +454,11 @@
                         <option value="31">31</option>
                     </select>
                     <select name="year" id="year" onchange="set_data('3', month,day,this)">
-                        <option value="0">-optional-</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
                         <option value="2019">2019</option>
-                        <option value="2020">2020</option>
                     </select>
                 </form>
 
@@ -462,7 +466,7 @@
                 <p> Select a building </p>
                 <form>
                     <select name="building" id="building" onchange="set_building('3', this)">
-                        <option value="0">-optional-</option>
+                        <option value="">-optional-</option>
                         <option value="AERL">AERL</option>
                         <option value="Allard Hall">Allard Hall</option>  
                         <option value="Alumni Centre"> Alumni Centre </option>

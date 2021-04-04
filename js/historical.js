@@ -82,13 +82,13 @@ var dataset_bool = {
 
 var dataset = {
   "1": {
-    'year': '2019', 'month': '1', 'day': '1', 'building': 'AERL'
+    'year': '2015', 'month': '1', 'day': '1', 'building': 'AERL'
   },
   "2": {
-    'year': '0', 'month': '0', 'day': '0', 'building': '0'
+    'year': '2015', 'month': '', 'day': '', 'building': ''
   },
   "3": {
-    'year': '0', 'month': '0', 'day': '0', 'building': '0'
+    'year': '2015', 'month': '', 'day': '', 'building': ''
   },
 };
 
@@ -120,7 +120,7 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
   dataset[num].day = oDaysSel.options[oDaysSel.selectedIndex].value;
   dataset[num].year = oYearSel.options[oYearSel.selectedIndex].value;
 
-  if (dataset[num].month !== '0' && dataset[num].building !== '0') {
+  if (dataset[num].day !== '' && dataset[num].month !== '' && dataset[num].building !== '') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
     update_graph(); //test
@@ -133,7 +133,7 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
 //called by choosing a building
 async function set_building (num, oBuildingSel) {
   dataset[num].building = oBuildingSel.options[oBuildingSel.selectedIndex].value;
-  if (dataset[num].month !== '0' && dataset[num].building !== '0') {
+  if (dataset[num].day !== '' && dataset[num].month !== '' && dataset[num].building !== '') {
     dataset_bool[num] = true;
     await get_data_from_json(num);
     update_graph(); //test
