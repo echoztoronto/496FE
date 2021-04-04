@@ -97,7 +97,7 @@ async function set_data (num, oMonthSel, oDaysSel, oYearSel) {
 }
 
 //called by choosing a building
-function set_building (num, oBuildingSel) {
+async function set_building (num, oBuildingSel) {
   dataset[num].building = oBuildingSel.options[oBuildingSel.selectedIndex].value;
   if (dataset[num].day !== '' && dataset[num].month !== '' && dataset[num].building !== '') {
     dataset_bool[num] = true;
@@ -109,7 +109,7 @@ function set_building (num, oBuildingSel) {
   }
 }
 
-function update_graph() {
+async function update_graph() {
 
   if(mychart != undefined) {
     mychart.destroy();
