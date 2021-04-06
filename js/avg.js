@@ -53,8 +53,10 @@ function set_data (month, year) {
   chosen_month = month.options[month.selectedIndex].value;
   chosen_year = year.options[year.selectedIndex].value;
 
-  get_datasets();
-  update_graph(); 
+  if(chosen_month != "") {
+    get_datasets();
+    update_graph(); 
+  }
 }
 
 function get_datasets() {
