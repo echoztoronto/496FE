@@ -41,6 +41,10 @@ var fs3 = $(document).ready(function() {
       success: function(data) {
         predictedData = data;
       },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
     });
 });
 
